@@ -188,189 +188,24 @@
               },
               "blocks": {}
             },
-            "buy_buttons_eYQEYi": {
-              "type": "buy-buttons",
+            "button_pnw3wE": {
+              "type": "button",
+              "name": "t:names.button",
               "settings": {
-                "stacking": true,
-                "show_pickup_availability": false,
-                "gift_card_form": true,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "label": "COTIZA CON NOSOTROS",
+                "link": "shopify://pages/contact",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
               },
-              "blocks": {
-                "quantity": {
-                  "type": "quantity",
-                  "static": true,
-                  "settings": {},
-                  "blocks": {}
-                },
-                "add-to-cart": {
-                  "type": "add-to-cart",
-                  "static": true,
-                  "settings": {
-                    "style_class": "button"
-                  },
-                  "blocks": {}
-                },
-                "accelerated-checkout": {
-                  "type": "accelerated-checkout",
-                  "static": true,
-                  "settings": {},
-                  "blocks": {}
-                }
-              },
-              "block_order": []
-            },
-            "accordion_LfTqqV": {
-              "type": "accordion",
-              "name": "Acordeón - Local",
-              "disabled": true,
-              "settings": {
-                "icon": "caret",
-                "dividers": true,
-                "type_preset": "h6",
-                "inherit_color_scheme": true,
-                "color_scheme": "",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {
-                "accordion_row_NYWgEa": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "heading": "Garantía",
-                    "open_by_default": false,
-                    "icon": "return",
-                    "width": 24
-                  },
-                  "blocks": {
-                    "text_Vykpme": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>En VINIQ queremos que estés 100% satisfecho con tu compra.</p><p>Puedes solicitar devolución hasta <strong>30 días corridos desde la recepción del producto</strong>, siempre que esté en buen estado y con su empaque original.</p>",
-                        "width": "100%",
-                        "max_width": "normal",
-                        "alignment": "left",
-                        "type_preset": "rte",
-                        "font": "var(--font-body--family)",
-                        "font_size": "1rem",
-                        "line_height": "normal",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "var(--color-foreground)",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_Vykpme"
-                  ]
-                },
-                "accordion_row_PNpgUL": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "heading": "Envío",
-                    "open_by_default": false,
-                    "icon": "truck",
-                    "width": 24
-                  },
-                  "blocks": {
-                    "text_RqUXnb": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>El envío es <strong>100% gratuito a todo Chile</strong>.<br/><br/>Una vez despachado, el tiempo estimado de entrega con <strong>Blue Express</strong> es:<br/><br/><strong>- Región Metropolitana:</strong> 1 a 3 días hábiles.<br/><strong>- Regiones:</strong> 2 a 5 días hábiles.<br/>- Zonas extremas pueden demorar algunos días adicionales.</p><p>¡Puedes recibir en 24 horas con un costo adicional!</p>",
-                        "width": "100%",
-                        "max_width": "normal",
-                        "alignment": "left",
-                        "type_preset": "rte",
-                        "font": "var(--font-body--family)",
-                        "font_size": "1rem",
-                        "line_height": "normal",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "var(--color-foreground)",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_RqUXnb"
-                  ]
-                },
-                "accordion_row_kJQKDh": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "heading": "Marca & Origen",
-                    "open_by_default": false,
-                    "icon": "none",
-                    "image_upload": "shopify://shop_images/IMG_3106.png",
-                    "width": 24
-                  },
-                  "blocks": {
-                    "text_dtkBa8": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>VINIQ es una marca <strong>chilena</strong> especializada en accesorios funcionales para amantes del vino.</p><p>Diseñamos productos que combinan estructura, estética y practicidad para el hogar.</p>",
-                        "width": "100%",
-                        "max_width": "normal",
-                        "alignment": "left",
-                        "type_preset": "rte",
-                        "font": "var(--font-body--family)",
-                        "font_size": "1rem",
-                        "line_height": "normal",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "var(--color-foreground)",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_dtkBa8"
-                  ]
-                }
-              },
-              "block_order": [
-                "accordion_row_NYWgEa",
-                "accordion_row_PNpgUL",
-                "accordion_row_kJQKDh"
-              ]
+              "blocks": {}
             },
             "accordion_dcWkYh": {
               "type": "accordion",
-              "name": "Acordeón - DropShipping",
+              "name": "Acordeón - Detalles",
               "settings": {
                 "icon": "caret",
                 "dividers": true,
@@ -543,8 +378,7 @@
             "judge_me_reviews_preview_badge_njXbCN",
             "group_icgrde",
             "variant_picker_R3rGDr",
-            "buy_buttons_eYQEYi",
-            "accordion_LfTqqV",
+            "button_pnw3wE",
             "accordion_dcWkYh",
             "text_aEtTtq"
           ]
