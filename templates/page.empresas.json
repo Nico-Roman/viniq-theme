@@ -1,0 +1,106 @@
+{
+  "sections": {
+    "empresas-main": {
+      "type": "empresas-page",
+      "settings": {
+        "eyebrow": "Soluciones Corporativas",
+        "heading": "VINIQ para Empresas",
+        "subheading": "Regala experiencias únicas con tu marca. Cavas de vino plegables 100% personalizadas con el logo, colores y packaging de tu empresa — el regalo corporativo que realmente sorprende y se recuerda.",
+        "cta_url": "/pages/contact",
+        "cta_label": "Cotiza con nosotros",
+        "value_heading": "Todo personalizado. Todo tuyo.",
+        "value_subheading": "Cada detalle pensado para representar a tu empresa con elegancia. Desde 1 unidad o pedidos al por mayor — adaptamos el servicio a tus necesidades.",
+        "contact_email": "contacto@viniq.cl"
+      },
+      "blocks": {
+        "block-logo": {
+          "type": "value_item",
+          "settings": {
+            "icon": "◈",
+            "title": "Logo Empresarial",
+            "description": "Grabado o impreso con tu logo corporativo. Alta resolución, aspecto premium."
+          }
+        },
+        "block-packaging": {
+          "type": "value_item",
+          "settings": {
+            "icon": "◻",
+            "title": "Packaging a Medida",
+            "description": "Caja con diseño personalizado, colores de marca, mensaje y acabados especiales."
+          }
+        },
+        "block-foto": {
+          "type": "value_item",
+          "settings": {
+            "icon": "◫",
+            "title": "Fotografía Profesional",
+            "description": "Imágenes del producto con tu branding para que lo uses en tus comunicaciones."
+          }
+        },
+        "block-despacho": {
+          "type": "value_item",
+          "settings": {
+            "icon": "◎",
+            "title": "Despacho Masivo",
+            "description": "Envíos a toda Chile con Blue Express. Coordinamos entregas a múltiples destinos."
+          }
+        },
+        "faq-1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Cuál es el pedido mínimo para empresas?",
+            "answer": "No existe un mínimo fijo — trabajamos desde 1 unidad. Sin embargo, para personalización con logo grabado o packaging especial, recomendamos pedidos de 5 unidades en adelante para optimizar costos y tiempos de producción."
+          }
+        },
+        "faq-2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Cuánto tiempo toma producir un pedido corporativo?",
+            "answer": "El tiempo de producción varía según la personalización. En general:\n— Pedidos estándar con logo: 5 a 7 días hábiles.\n— Pedidos con packaging personalizado: 10 a 15 días hábiles.\nSi tienes una fecha límite, indícala en el formulario y buscamos la forma de cumplirla."
+          }
+        },
+        "faq-3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Qué tipos de personalización ofrecen?",
+            "answer": "Ofrecemos múltiples opciones: logo empresarial grabado o impreso, packaging con diseño y colores de tu marca, tarjeta de regalo personalizada y fotografías del producto con tu branding para redes y comunicaciones."
+          }
+        },
+        "faq-4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Hacen despachos a múltiples destinos?",
+            "answer": "Sí. Coordinamos envíos individuales a distintas direcciones a lo largo de Chile usando Blue Express. El costo de envío se calcula por cada destino y se detalla en la cotización."
+          }
+        },
+        "faq-5": {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Cómo se realiza el pago?",
+            "answer": "Para pedidos corporativos trabajamos con factura. Se solicita un 50% de anticipo al confirmar el pedido y el saldo restante antes del despacho. Aceptamos transferencia bancaria y tarjeta de crédito/débito."
+          }
+        },
+        "faq-6": {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Pueden ayudarme con el diseño si no tengo archivos de mi logo?",
+            "answer": "Sí. Si no tienes los archivos en alta resolución, nuestro equipo puede ayudarte a recrear o adaptar tu logo para el producto. Solo comparte lo que tengas (imagen, sitio web, tarjeta de presentación) y lo trabajamos juntos."
+          }
+        }
+      },
+      "blocks_order": [
+        "block-logo",
+        "block-packaging",
+        "block-foto",
+        "block-despacho",
+        "faq-1",
+        "faq-2",
+        "faq-3",
+        "faq-4",
+        "faq-5",
+        "faq-6"
+      ]
+    }
+  },
+  "order": ["empresas-main"]
+}

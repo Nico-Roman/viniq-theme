@@ -1,0 +1,786 @@
+<script type="application/ld+json">
+  {{ closest.product | structured_data }}
+</script>
+
+{% capture media_gallery %}
+  {%- content_for 'block',
+    type: '_product-media-gallery',
+    id: 'media-gallery',
+    closest.product: closest.product
+  -%}
+{% endcapture %}
+
+{% capture product_details %}
+  {% content_for 'block',
+    type: '_product-details',
+    id: 'product-details',
+    closest.product: closest.product
+  %}
+{% endcapture %}
+
+{% capture additional_blocks %}
+  {% content_for 'blocks' %}
+{% endcapture %}
+
+{% if section.settings.enable_sticky_add_to_cart %}
+  {% liquid
+    assign current_variant = product.selected_or_first_available_variant
+    # Get the initial quantity based on quantity rules
+    assign initial_quantity = current_variant.quantity_rule.min | default: 1
+  %}
+
+  <sticky-add-to-cart
+    class="sticky-add-to-cart"
+    data-variant-available="{{ current_variant.available }}"
+    data-product-id="{{ product.id }}"
+    data-current-variant-id="{{ current_variant.id }}"
+    data-initial-quantity="{{ initial_quantity }}"
+    data-default-variant-title="{{ 'products.product.default_title' | t }}"
+  >
+    <div
+      class="sticky-add-to-cart__bar color-{{ settings.popover_color_scheme }}"
+      data-stuck="false"
+      ref="stickyBar"
+      role="region"
+      aria-label="{{ 'products.product.sticky_add_to_cart' | t }}"
+    >
+      {% liquid
+        assign image_to_show = current_variant.featured_image | default: product.featured_image
+      %}
+      {% if image_to_show %}
+        <div
+          class="sticky-add-to-cart__image"
+        >
+          {% assign image_alt = image_to_show.alt | default: product.title | escape %}
+          {{
+            image_to_show
+            | image_url: width: 120
+            | image_tag:
+              loading: 'lazy',
+              alt: image_alt,
+              class: 'sticky-add-to-cart__image-img',
+              data-testid: 'sticky-product-image',
+              srcset: null,
+              sizes: null,
+              ref: 'productImage'
+          }}
+        </div>
+      {% endif %}
+
+      {% liquid
+        assign has_single_option = false
+        if product.has_only_default_variant != true and product.options.size == 1
+          assign has_single_option = true
+        endif
+
+        if image_to_show == blank
+          assign has_image = false
+        else
+          assign has_image = true
+        endif
+      %}
+      <div
+        class="sticky-add-to-cart__info"
+        data-has-image="{{ has_image }}"
+        data-singleton="{{ product.has_only_default_variant }}"
+        data-single-option="{{ has_single_option }}"
+      >
+        <p
+          class="sticky-add-to-cart__title"
+          data-testid="sticky-product-title"
+        >
+          {{ product.title | escape }}
+        </p>
+        <div
+          class="sticky-add-to-cart__variant"
+          data-testid="sticky-variant-title"
+          {% if product.has_only_default_variant %}
+            style="display: none;"
+          {% endif %}
+        >
+          {% unless product.has_only_default_variant %}
+            {% if current_variant != blank %}
+              {% assign variant_title = current_variant.title | escape %}
+            {% endif %}
+            {{ variant_title }}
+          {% endunless %}
+        </div>
+      </div>
+
+      <div
+        class="sticky-add-to-cart__price"
+        data-testid="sticky-price-display"
+      >
+        {% render 'price', product_resource: product, show_sale_price_first: true %}
+      </div>
+
+      <button
+        type="button"
+        class="sticky-add-to-cart__button add-to-cart-button button"
+        ref="addToCartButton"
+        on:click="/handleAddToCartClick"
+        {% unless current_variant.available %}
+          disabled
+        {% endunless %}
+      >
+        <span
+          class="add-to-cart-text"
+        >
+          {% if current_variant.available %}
+            <span class="svg-wrapper add-to-cart-icon">
+              {{- 'icon-add-to-cart.svg' | inline_asset_content -}}
+            </span>
+          {% endif %}
+          <span class="add-to-cart-text__content">
+            <span>
+              {%- if current_variant.available -%}
+                {{- 'products.product.add_to_cart' | t -}}
+              {%- elsif current_variant == blank -%}
+                {{- 'products.product.unavailable' | t -}}
+              {%- else -%}
+                {{- 'products.product.sold_out' | t -}}
+              {%- endif -%}
+            </span>
+            <span
+              ref="quantityDisplay"
+              {% if current_variant.available and initial_quantity > 1 %}
+                style="display: inline;"
+              {% else %}
+                style="display: none;"
+              {% endif %}
+            >
+              {{- ' (' -}}
+              <span ref="quantityNumber">{{- initial_quantity -}}</span>
+              {{- ')' -}}
+            </span>
+          </span>
+        </span>
+        <span class="add-to-cart__added">
+          <span class="svg-wrapper add-to-cart__added-icon">
+            {{- 'icon-checkmark-burst.svg' | inline_asset_content -}}
+          </span>
+        </span>
+      </button>
+    </div>
+  </sticky-add-to-cart>
+{% endif %}
+
+{% render 'product-information-content',
+  product_media_size: closest.product.media.size,
+  section_id: section.id,
+  settings: section.settings,
+  media_gallery: media_gallery,
+  product_details: product_details,
+  additional_blocks: additional_blocks
+%}
+
+{% stylesheet %}
+  .sticky-add-to-cart__bar {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    opacity: 0;
+    transform: translateX(-50%) translateY(calc(100% + 40px));
+    z-index: calc(var(--layer-sticky) - 1); /* Below sticky header */
+    display: block;
+    width: 600px;
+    border-radius: calc(
+      var(--style-border-radius-buttons-primary) + min(var(--padding-sm), var(--style-border-radius-buttons-primary))
+    );
+    box-shadow: var(--shadow-popover);
+    padding: var(--padding-sm);
+    /* Layout styling */
+    display: flex;
+    align-items: center;
+    gap: var(--gap-md);
+
+    @starting-style {
+      opacity: 0;
+      transform: translateX(-50%) translateY(calc(100% + 40px));
+    }
+
+    &::before {
+      --border: 2px;
+      content: '';
+      position: absolute;
+      inset: calc(var(--border) * -1);
+      background: linear-gradient(var(--color-background) 0 100%), linear-gradient(hsl(0 0% 0% / 0.15) 0 100%);
+      background-clip: content-box, border-box;
+      border: var(--border) solid #0000;
+      border-radius: inherit;
+      z-index: -1;
+      backdrop-filter: blur(20px) saturate(180%) brightness(1.5);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .sticky-add-to-cart__bar {
+      transition-property: transform, opacity, display;
+      transition-duration: 0.3s;
+      transition-timing-function: var(--ease-out-quad);
+      transition-behavior: allow-discrete;
+    }
+  }
+
+  .sticky-add-to-cart__bar[data-stuck='true'] {
+    transform: translateX(-50%) translateY(0%);
+    opacity: 1;
+  }
+
+  sticky-add-to-cart:not([data-variant-available='true']) .sticky-add-to-cart__bar {
+    opacity: 0;
+    transform: translateX(-50%) translateY(calc(100% + 40px));
+    display: none;
+  }
+
+  .sticky-add-to-cart__info[data-has-image='false'] {
+    padding-left: var(--padding-lg);
+  }
+
+  .sticky-add-to-cart__image {
+    flex-shrink: 0;
+    aspect-ratio: 1;
+    height: var(--height-buy-buttons);
+    overflow: hidden;
+    border-radius: var(--style-border-radius-buttons-primary);
+    background: var(--color-background-secondary);
+  }
+
+  .sticky-add-to-cart__image-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .sticky-add-to-cart__info {
+    flex: 1;
+    min-width: 0; /* Allow text truncation */
+  }
+
+  .sticky-add-to-cart__title {
+    font-size: var(--font-paragraph-medium--size);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--font-paragraph--line-height);
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .sticky-add-to-cart__variant {
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    font-size: var(--font-paragraph-small--size);
+    margin-top: var(--margin-3xs);
+  }
+
+  .sticky-add-to-cart__price {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .sticky-add-to-cart__button {
+    height: var(--height-buy-buttons);
+    position: relative;
+  }
+
+  /* Mobile adjustments */
+  @media screen and (max-width: 749px) {
+    .sticky-add-to-cart__bar {
+      bottom: 0;
+      width: 100%;
+      max-width: none;
+      border-radius: 0;
+
+      &::before {
+        --border: 1px;
+      }
+    }
+
+    .sticky-add-to-cart__bar .add-to-cart-text__content {
+      display: none;
+    }
+
+    .sticky-add-to-cart__info[data-has-image='false'] {
+      padding-left: 0;
+    }
+
+    .sticky-add-to-cart__title {
+      font-size: var(--font-paragraph--size);
+    }
+
+    .sticky-add-to-cart__button {
+      padding: var(--padding-lg);
+    }
+
+    .sticky-add-to-cart__price {
+      font-size: var(--font-paragraph-small--size);
+    }
+
+    .sticky-add-to-cart__button {
+      width: var(--height-buy-buttons);
+    }
+
+    sticky-add-to-cart:not([data-variant-available='true']) .add-to-cart-text__content {
+      display: initial;
+    }
+
+    sticky-add-to-cart:not([data-variant-available='true']) .sticky-add-to-cart__button {
+      width: auto;
+    }
+  }
+
+  /* Small mobile - hide text content and compare price */
+  @media screen and (max-width: 389px) {
+    .sticky-add-to-cart__bar {
+      .compare-at-price {
+        display: none;
+      }
+    }
+
+    .sticky-add-to-cart__title {
+      display: none;
+    }
+
+    /* For product with only default variant show title */
+    .sticky-add-to-cart__info[data-singleton='true'] .sticky-add-to-cart__title {
+      display: block;
+    }
+
+    /* For single variant show title and variant, truncate both. variant should be identifiable with truncation */
+    .sticky-add-to-cart__info[data-single-option='true'] .sticky-add-to-cart__title {
+      display: block;
+    }
+
+    .sticky-add-to-cart__info[data-single-option='true'] .sticky-add-to-cart__variant {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.product_information",
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "content_width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "content-center-aligned",
+          "label": "t:options.page"
+        },
+        {
+          "value": "content-full-width",
+          "label": "t:options.full"
+        }
+      ],
+      "default": "content-center-aligned"
+    },
+    {
+      "type": "select",
+      "id": "desktop_media_position",
+      "label": "t:settings.media_position",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:options.left"
+        },
+        {
+          "value": "right",
+          "label": "t:options.right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "equal_columns",
+      "label": "t:settings.equal_columns",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "limit_details_width",
+      "label": "t:settings.limit_product_details_width",
+      "default": false,
+      "visible_if": "{{ section.settings.equal_columns }}"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "t:settings.gap",
+      "min": 0,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_add_to_cart",
+      "label": "t:settings.enable_sticky_add_to_cart",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+ "presets": []
+}
+{% endschema %}
+
+{% comment %} ===== VINIQ POPUP + CHAT ===== {% endcomment %}
+
+{% assign vq_has_purchased = false %}
+{% if customer %}
+  {% assign vq_is_logged = true %}
+  {% for order in customer.orders limit:50 %}
+    {% assign order_month = order.created_at | date: "%Y-%m" %}
+    {% assign current_month = "now" | date: "%Y-%m" %}
+    {% if order_month == current_month %}
+      {% assign vq_has_purchased = true %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+{% else %}
+  {% assign vq_is_logged = false %}
+{% endif %}
+
+<style>
+  :root {
+    --vq-wine: #7a2c2c;
+    --vq-gold: #c9a84c;
+    --vq-cream: #fdf6ee;
+    --vq-dark: #1a1a1a;
+  }
+  #chat-widget-btn {
+    position: fixed;
+    bottom: 88px;
+    left: 20px;
+    z-index: 9999;
+    background: var(--vq-dark);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.28);
+    transition: transform 0.2s ease, box-shadow 0.2s;
+  }
+  #chat-widget-btn:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(0,0,0,0.35); }
+  #chat-widget-box {
+    display: none;
+    position: fixed;
+    bottom: 156px;
+    left: 20px;
+    z-index: 9999;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    width: 300px;
+    overflow: hidden;
+    font-family: inherit;
+    border: 1px solid #e8e8e8;
+  }
+  body:not(.vq-has-sticky) #chat-widget-btn { bottom: 24px; }
+  body:not(.vq-has-sticky) #chat-widget-box { bottom: 92px; }
+  #chat-header { background: var(--vq-dark); color: white; padding: 14px 18px; font-weight: 700; font-size: 14px; letter-spacing: 0.5px; text-transform: uppercase; }
+  #chat-body { padding: 16px; }
+  #chat-info input { width: 100%; margin-bottom: 10px; padding: 10px 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 13px; box-sizing: border-box; font-family: inherit; color: #111; outline: none; }
+  #chat-info input:focus { border-color: #111; }
+  #chat-start { width: 100%; background: var(--vq-dark); color: white; border: none; padding: 12px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; letter-spacing: 0.5px; text-transform: uppercase; font-family: inherit; }
+  #chat-messages { display: none; height: 200px; overflow-y: auto; border: 1px solid #e0e0e0; border-radius: 8px; padding: 10px; margin-bottom: 10px; font-size: 13px; }
+  .msg-customer { text-align: right; margin-bottom: 8px; }
+  .msg-customer span { background: #111; color: white; padding: 6px 10px; border-radius: 12px 12px 2px 12px; display: inline-block; max-width: 80%; }
+  .msg-agent { text-align: left; margin-bottom: 8px; }
+  .msg-agent span { background: #f0f0f0; color: #111; padding: 6px 10px; border-radius: 12px 12px 12px 2px; display: inline-block; max-width: 80%; }
+  #chat-input-area { display: none; }
+  #chat-input-area textarea { width: 100%; padding: 10px 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 13px; box-sizing: border-box; font-family: inherit; resize: none; height: 65px; outline: none; }
+  #chat-input-area textarea:focus { border-color: #111; }
+  #chat-send { width: 100%; background: #111; color: white; border: none; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; letter-spacing: 0.5px; text-transform: uppercase; font-family: inherit; margin-top: 8px; }
+  .vq-overlay { display: none; position: fixed; inset: 0; background: rgba(20,10,5,0.72); backdrop-filter: blur(4px); z-index: 10000; align-items: center; justify-content: center; animation: vqFadeIn 0.35s ease; }
+  .vq-overlay.active { display: flex; }
+  @keyframes vqFadeIn  { from { opacity: 0 } to { opacity: 1 } }
+  @keyframes vqSlideUp { from { opacity: 0; transform: translateY(40px) } to { opacity: 1; transform: translateY(0) } }
+  .vq-popup { background: var(--vq-cream); border-radius: 4px; max-width: 460px; width: 92%; padding: 40px 36px 32px; position: relative; animation: vqSlideUp 0.4s cubic-bezier(.22,1,.36,1); text-align: center; box-shadow: 0 32px 80px rgba(0,0,0,0.45); }
+  .vq-popup__close { position: absolute; top: 12px; right: 16px; background: none; border: none; font-size: 22px; cursor: pointer; color: #999; line-height: 1; }
+  .vq-popup__close:hover { color: var(--vq-dark); }
+  .vq-tag { display: inline-block; background: var(--vq-wine); color: #fff; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
+  .vq-popup h2 { font-family: Georgia, serif; font-size: 28px; color: var(--vq-dark); margin: 0 0 8px; line-height: 1.2; }
+  .vq-popup p { font-size: 15px; color: #555; margin: 0 0 20px; line-height: 1.5; }
+  .vq-code-box { display: flex; align-items: center; justify-content: center; gap: 10px; background: #fff; border: 2px dashed var(--vq-gold); border-radius: 4px; padding: 14px 18px; margin-bottom: 20px; }
+  .vq-code-box span { font-family: 'Courier New', monospace; font-size: 22px; font-weight: bold; color: var(--vq-wine); letter-spacing: 3px; }
+  .vq-copy-btn { background: none; border: 1px solid var(--vq-wine); color: var(--vq-wine); font-size: 12px; padding: 4px 10px; border-radius: 3px; cursor: pointer; transition: all .2s; }
+  .vq-copy-btn:hover { background: var(--vq-wine); color: #fff; }
+  .vq-timer { font-size: 13px; color: #888; margin-bottom: 22px; }
+  .vq-timer strong { color: var(--vq-wine); font-size: 15px; font-variant-numeric: tabular-nums; }
+  .vq-btn { display: block; width: 100%; padding: 15px; background: var(--vq-wine); color: #fff; font-size: 15px; font-weight: 600; letter-spacing: 0.5px; border: none; border-radius: 3px; cursor: pointer; text-decoration: none; transition: background .2s, transform .1s; }
+  .vq-btn:hover { background: #5e2020; transform: translateY(-1px); }
+  .vq-dismiss { display: block; margin-top: 14px; font-size: 12px; color: #aaa; cursor: pointer; text-decoration: underline; }
+  .vq-dismiss:hover { color: #666; }
+  #vq-exit .vq-popup { max-width: 500px; text-align: left; }
+  #vq-exit .vq-contract-header { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid #ddd; }
+  #vq-exit .vq-seal { font-size: 36px; line-height: 1; }
+  #vq-exit .vq-contract-header h3 { margin: 0 0 2px; font-family: Georgia, serif; font-size: 18px; color: var(--vq-dark); }
+  #vq-exit .vq-contract-header p { margin: 0; font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+  .vq-clauses { background: #fff; border: 1px solid #e0d8cc; border-radius: 4px; padding: 16px 18px; margin-bottom: 20px; font-size: 13.5px; color: #444; line-height: 1.7; }
+  .vq-clauses ol { margin: 0; padding-left: 18px; }
+  .vq-clauses li { margin-bottom: 6px; }
+  .vq-clauses strong { color: var(--vq-wine); }
+  .vq-exit-actions { display: flex; gap: 10px; flex-direction: column; }
+  .vq-btn-secondary { display: block; width: 100%; padding: 13px; background: #fff; color: #888; font-size: 13px; border: 1px solid #ddd; border-radius: 3px; cursor: pointer; text-align: center; transition: background .2s; }
+  .vq-btn-secondary:hover { background: #f5f0eb; color: #555; }
+</style>
+
+<!-- CHAT -->
+<button id="chat-widget-btn">💬</button>
+<div id="chat-widget-box">
+  <div id="chat-header">💬 Chatea con nosotros</div>
+  <div id="chat-body">
+    <div id="chat-info">
+      <input type="text" id="chat-name" placeholder="Tu nombre" />
+      <input type="tel" id="chat-phone" placeholder="9 1234 5678" maxlength="11"
+        oninput="this.value=this.value.replace(/[^0-9 ]/g,'')" />
+      <button id="chat-start">Iniciar chat</button>
+    </div>
+    <div id="chat-messages"></div>
+    <div id="chat-input-area">
+      <textarea id="chat-message" placeholder="Escribe tu mensaje..."></textarea>
+      <button id="chat-send">Enviar</button>
+    </div>
+  </div>
+</div>
+
+<!-- POPUP $3.000 DESCUENTO -->
+<div class="vq-overlay" id="vq-discount">
+  <div class="vq-popup">
+    <button class="vq-popup__close" onclick="vqClose('vq-discount')" aria-label="Cerrar">×</button>
+    <div class="vq-tag">Solo por hoy · Primera compra</div>
+    <h2>¡$3.000 de descuento<br>en tu primera compra!</h2>
+    <p>Usa este código al finalizar tu compra y paga solo <strong>$21.990</strong> por tu cava VINIQ.</p>
+    <div class="vq-code-box">
+      <span>PRIMERA</span>
+      <button class="vq-copy-btn" onclick="vqCopy(this)">Copiar</button>
+    </div>
+    <div class="vq-timer">⏱ El código expira en: <strong id="vq-countdown">23:59:59</strong></div>
+    <a href="#" class="vq-btn" onclick="vqAddAndOpen(); return false;">
+      🍷 Comprar ahora con descuento
+    </a>
+    <span class="vq-dismiss" onclick="vqClose('vq-discount')">No, prefiero pagar precio completo</span>
+  </div>
+</div>
+
+<!-- POPUP EXIT INTENT -->
+<div class="vq-overlay" id="vq-exit">
+  <div class="vq-popup">
+    <button class="vq-popup__close" onclick="vqClose('vq-exit')" aria-label="Cerrar">×</button>
+    <div class="vq-contract-header">
+      <div class="vq-seal">📜</div>
+      <div>
+        <h3>Contrato de Oferta Especial</h3>
+        <p>Documento oficial · VINIQ Chile</p>
+      </div>
+    </div>
+    <div class="vq-clauses">
+      <ol>
+        <li>El descuento de <strong>$3.000</strong> con el código <strong>PRIMERA</strong> ha sido reservado exclusivamente para usted.</li>
+        <li>Al abandonar este sitio, <strong>la oferta quedará anulada de forma permanente</strong> y el código expirará inmediatamente.</li>
+        <li>No será posible recuperar este beneficio ni reclamarlo en una visita futura.</li>
+        <li>El precio de tu cava VINIQ volverá al valor regular de $24.990 sin posibilidad de excepción.</li>
+      </ol>
+    </div>
+    <p style="font-size:13px;color:#888;margin-bottom:18px;">Al hacer clic en "Volver y aprovechar" reconoces que has leído y aceptado los términos anteriores.</p>
+    <div class="vq-exit-actions">
+      <a href="#" class="vq-btn" onclick="vqAddAndOpen(); return false;">✅ Volver y aprovechar mi descuento</a>
+      <button class="vq-btn-secondary" onclick="vqClose('vq-exit')">Renuncio a mi descuento de $3.000 y salgo</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var VQ_VARIANT_ID = {{ product.selected_or_first_available_variant.id }};
+  var BACKEND_URL = "https://web-production-13291.up.railway.app";
+  var sessionId = null;
+  var customerName = "";
+  var customerPhone = "";
+
+  function addMessage(text, role) {
+    var container = document.getElementById("chat-messages");
+    var div = document.createElement("div");
+    div.className = role === "customer" ? "msg-customer" : "msg-agent";
+    div.innerHTML = "<span>" + text + "</span>";
+    container.appendChild(div);
+    container.scrollTop = container.scrollHeight;
+  }
+  function startPolling() {
+    setInterval(function() {
+      fetch(BACKEND_URL + "/get-responses?session_id=" + sessionId)
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.responses && data.responses.length > 0) {
+            data.responses.forEach(function(r) { addMessage(r, "agent"); });
+          }
+        }).catch(function(){});
+    }, 3000);
+  }
+
+  document.getElementById("chat-widget-btn").addEventListener("click", function() {
+    var box = document.getElementById("chat-widget-box");
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  });
+  document.getElementById("chat-start").addEventListener("click", function() {
+    var name  = document.getElementById("chat-name").value.trim();
+    var phone = document.getElementById("chat-phone").value.trim();
+    if (!name) { alert("Por favor ingresa tu nombre."); return; }
+    customerName  = name;
+    customerPhone = phone;
+    sessionId = Math.random().toString(36).substring(2, 8).toUpperCase();
+    document.getElementById("chat-info").style.display      = "none";
+    document.getElementById("chat-messages").style.display   = "block";
+    document.getElementById("chat-input-area").style.display = "block";
+    addMessage("¡Hola " + name + "! ¿En qué te podemos ayudar?", "agent");
+    startPolling();
+    fetch(BACKEND_URL + "/send-message", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ session_id: sessionId, name: customerName, phone: customerPhone, message: "Chat iniciado" })
+    });
+  });
+  document.getElementById("chat-send").addEventListener("click", function() {
+    var message = document.getElementById("chat-message").value.trim();
+    if (!message) return;
+    addMessage(message, "customer");
+    document.getElementById("chat-message").value = "";
+    fetch(BACKEND_URL + "/send-message", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ session_id: sessionId, name: customerName, phone: customerPhone, message: message })
+    });
+  });
+
+  var vqIsLogged  = {{ vq_is_logged | json }};
+  var vqPurchased = {{ vq_has_purchased | json }};
+  var vqIsProductPage = {{ request.page_type | json }} === 'product' &&
+                        {{ product.handle | json }} === 'cava-de-vino-plegable-de-madera-diseno-funcional-y-elegante';
+  var vqShouldShow = vqIsProductPage && (!vqIsLogged || (vqIsLogged && !vqPurchased));
+  var exitShown = false;
+
+  window.vqClose = function(id) {
+    document.getElementById(id).classList.remove('active');
+  };
+  window.vqCopy = function(btn) {
+    navigator.clipboard.writeText('PRIMERA').then(function() {
+      btn.textContent = '¡Copiado!';
+      btn.style.background = '#7a2c2c';
+      btn.style.color = '#fff';
+      setTimeout(function() {
+        btn.textContent = 'Copiar';
+        btn.style.background = '';
+        btn.style.color = '';
+      }, 2000);
+    });
+  };
+  window.vqAddAndOpen = function() {
+    vqClose('vq-discount');
+    vqClose('vq-exit');
+    fetch('/cart/clear.js', { method: 'POST' })
+      .then(function() {
+        return fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: VQ_VARIANT_ID, quantity: 1 })
+        });
+      })
+      .then(function(res) {
+        if (!res.ok) throw new Error('error');
+        window.location.href = '/checkout?discount=PRIMERA';
+      })
+      .catch(function() {
+        window.location.href = '/cart/' + VQ_VARIANT_ID + ':1?checkout[discount_code]=PRIMERA&redirect=/checkout';
+      });
+  };
+
+  function startTimer() {
+    var todayKey = 'vq_expiry_' + new Date().toISOString().slice(0, 10);
+    Object.keys(localStorage).forEach(function(k) {
+      if (k.startsWith('vq_expiry_') && k !== todayKey) localStorage.removeItem(k);
+    });
+    var expiry = parseInt(localStorage.getItem(todayKey) || '0');
+    if (!expiry || expiry < Date.now()) {
+      expiry = Date.now() + (24 * 60 * 60 * 1000);
+      localStorage.setItem(todayKey, expiry.toString());
+    }
+    var el = document.getElementById('vq-countdown');
+    if (!el) return;
+    var iv = setInterval(function() {
+      var diff = expiry - Date.now();
+      if (diff <= 0) { clearInterval(iv); el.textContent = '00:00:00'; return; }
+      var h = Math.floor(diff / 3600000);
+      var m = Math.floor((diff % 3600000) / 60000);
+      var s = Math.floor((diff % 60000) / 1000);
+      el.textContent = String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+    }, 1000);
+  }
+
+  if (vqShouldShow) {
+    startTimer();
+    setTimeout(function() {
+      document.getElementById('vq-discount').classList.add('active');
+    }, 7000);
+    document.addEventListener('mouseleave', function(e) {
+      if (e.clientY <= 5 && !exitShown) {
+        exitShown = true;
+        document.getElementById('vq-discount').classList.remove('active');
+        document.getElementById('vq-exit').classList.add('active');
+      }
+    });
+  }
+
+})();
+</script>
+{% comment %} ===== FIN VINIQ – product-information.liquid ===== {% endcomment %}

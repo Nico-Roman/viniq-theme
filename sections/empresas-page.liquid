@@ -1,0 +1,682 @@
+<style>
+  /* =============================================
+     VINIQ Empresas — Estilos
+     Paleta: #000 negro | #fff blanco | #f5f5f5 gris
+  ============================================= */
+
+  .vq-empresas * { box-sizing: border-box; }
+
+  .vq-empresas {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #000;
+    background: #fff;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---- HERO ---- */
+  .vq-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+    padding: 64px 0 80px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+
+  @media (max-width: 768px) {
+    .vq-hero { grid-template-columns: 1fr; gap: 32px; padding: 48px 0 56px; }
+    .vq-hero-img { order: -1; }
+  }
+
+  .vq-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.45);
+    margin: 0 0 16px;
+  }
+
+  .vq-hero h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin: 0 0 20px;
+  }
+
+  .vq-hero p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(0,0,0,0.68);
+    margin: 0 0 32px;
+    max-width: 440px;
+  }
+
+  .vq-btn-primary {
+    display: inline-block;
+    background: #000;
+    color: #fff !important;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    padding: 16px 36px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .vq-btn-primary:hover { background: #333; }
+
+  .vq-btn-secondary {
+    display: inline-block;
+    background: transparent;
+    color: #000 !important;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    padding: 15px 36px;
+    border: 1px solid #000;
+    cursor: pointer;
+    margin-left: 12px;
+    transition: all 0.2s;
+  }
+  .vq-btn-secondary:hover { background: #f5f5f5; }
+
+  @media (max-width: 480px) {
+    .vq-btn-secondary { margin-left: 0; margin-top: 12px; display: block; text-align: center; }
+  }
+
+  .vq-hero-img img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ---- PROPUESTA DE VALOR ---- */
+  .vq-value {
+    padding: 72px 0;
+    text-align: center;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .vq-value h2 {
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    margin: 0 0 16px;
+  }
+
+  .vq-value > p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(0,0,0,0.62);
+    max-width: 580px;
+    margin: 0 auto 56px;
+  }
+
+  .vq-value-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    text-align: left;
+  }
+
+  @media (max-width: 900px) { .vq-value-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .vq-value-grid { grid-template-columns: 1fr; } }
+
+  .vq-value-item {
+    padding: 28px;
+    border: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .vq-value-icon {
+    font-size: 1.6rem;
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .vq-value-item h3 {
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 0 0 8px;
+  }
+
+  .vq-value-item p {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: rgba(0,0,0,0.62);
+    margin: 0;
+  }
+
+  /* ---- COMO FUNCIONA ---- */
+  .vq-how {
+    padding: 72px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .vq-how h2 {
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    text-align: center;
+    margin: 0 0 12px;
+  }
+
+  .vq-how > p {
+    text-align: center;
+    color: rgba(0,0,0,0.55);
+    margin: 0 0 56px;
+    font-size: 0.95rem;
+  }
+
+  .vq-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  @media (max-width: 768px) { .vq-steps { grid-template-columns: 1fr; } }
+
+  .vq-step {
+    padding: 36px 32px;
+    border-left: 1px solid rgba(0,0,0,0.08);
+    position: relative;
+  }
+  .vq-step:first-child { border-left: none; }
+
+  @media (max-width: 768px) {
+    .vq-step { border-left: none; border-top: 1px solid rgba(0,0,0,0.08); padding: 28px 0; }
+    .vq-step:first-child { border-top: none; }
+  }
+
+  .vq-step-num {
+    font-size: 3rem;
+    font-weight: 700;
+    color: rgba(0,0,0,0.07);
+    line-height: 1;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .vq-step h3 { font-size: 1rem; font-weight: 700; margin: 0 0 10px; }
+
+  .vq-step p {
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: rgba(0,0,0,0.6);
+    margin: 0;
+  }
+
+  /* ---- GALERIA ---- */
+  .vq-gallery {
+    padding: 72px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .vq-gallery h2 {
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    text-align: center;
+    margin: 0 0 40px;
+  }
+
+  .vq-gallery-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 280px 280px;
+    gap: 8px;
+  }
+
+  @media (max-width: 768px) {
+    .vq-gallery-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 220px 220px 220px;
+    }
+    .vq-gallery-item:first-child { grid-column: span 2; }
+  }
+
+  .vq-gallery-item { overflow: hidden; background: #f5f5f5; }
+  .vq-gallery-item:first-child { grid-row: span 2; }
+
+  .vq-gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  .vq-gallery-item:hover img { transform: scale(1.04); }
+
+  /* ---- CTA FINAL ---- */
+  .vq-cta {
+    padding: 80px 24px;
+    text-align: center;
+    background: #000;
+    margin: 0 -24px;
+  }
+
+  .vq-cta h2 {
+    font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: #fff;
+    margin: 0 0 16px;
+  }
+
+  .vq-cta p {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.65);
+    max-width: 500px;
+    margin: 0 auto 36px;
+    line-height: 1.7;
+  }
+
+  .vq-btn-white {
+    display: inline-block;
+    background: #fff;
+    color: #000 !important;
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    padding: 18px 44px;
+    transition: background 0.2s;
+  }
+  .vq-btn-white:hover { background: #e8e8e8; }
+
+  /* ---- FAQ ---- */
+  .vq-faq {
+    padding: 72px 0 48px;
+  }
+
+  .vq-faq h2 {
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 40px;
+    text-align: center;
+  }
+
+  .vq-faq-item {
+    border-top: 1px solid rgba(0,0,0,0.1);
+    padding: 20px 0;
+  }
+  .vq-faq-item:last-child { border-bottom: 1px solid rgba(0,0,0,0.1); }
+
+  .vq-faq-item summary {
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .vq-faq-item summary::-webkit-details-marker { display: none; }
+
+  .vq-faq-item summary::after {
+    content: '+';
+    font-size: 1.4rem;
+    font-weight: 300;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+  .vq-faq-item[open] summary::after { transform: rotate(45deg); }
+
+  .vq-faq-item p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: rgba(0,0,0,0.62);
+    margin: 14px 0 4px;
+  }
+
+  /* ---- CONTACTO STRIP ---- */
+  .vq-contact-strip {
+    background: #f5f5f5;
+    padding: 40px 32px;
+    text-align: center;
+    margin: 0 -24px;
+  }
+  .vq-contact-strip p {
+    font-size: 0.9rem;
+    color: rgba(0,0,0,0.6);
+    margin: 0 0 6px;
+  }
+  .vq-contact-strip a {
+    color: #000;
+    font-weight: 600;
+    text-decoration: underline;
+  }
+</style>
+
+<div class="vq-empresas">
+
+  <!-- ======= HERO ======= -->
+  <section class="vq-hero">
+    <div class="vq-hero-text">
+      <p class="vq-eyebrow">{{ section.settings.eyebrow }}</p>
+      <h1>{{ section.settings.heading }}</h1>
+      <p>{{ section.settings.subheading }}</p>
+      <div>
+        <a href="{{ section.settings.cta_url }}" class="vq-btn-primary">{{ section.settings.cta_label }}</a>
+        <a href="#como-funciona" class="vq-btn-secondary">¿Cómo funciona?</a>
+      </div>
+    </div>
+    <div class="vq-hero-img">
+      {%- if section.settings.hero_image != blank -%}
+        <img
+          src="{{ section.settings.hero_image | image_url: width: 800 }}"
+          alt="{{ section.settings.hero_image.alt | escape }}"
+          width="800"
+          height="500"
+          loading="eager"
+        >
+      {%- else -%}
+        <img
+          src="https://viniq.cl/cdn/shop/files/aaa.jpg?v=1766856112&width=800"
+          alt="Cava de Vino VINIQ — Personalización Corporativa"
+          width="800"
+          height="500"
+          loading="eager"
+        >
+      {%- endif -%}
+    </div>
+  </section>
+
+  <!-- ======= PROPUESTA DE VALOR ======= -->
+  <section class="vq-value">
+    <h2>{{ section.settings.value_heading }}</h2>
+    <p>{{ section.settings.value_subheading }}</p>
+    <div class="vq-value-grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'value_item' -%}
+          <div class="vq-value-item" {{ block.shopify_attributes }}>
+            <span class="vq-value-icon">{{ block.settings.icon }}</span>
+            <h3>{{ block.settings.title }}</h3>
+            <p>{{ block.settings.description }}</p>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </section>
+
+  <!-- ======= COMO FUNCIONA ======= -->
+  <section class="vq-how" id="como-funciona">
+    <h2>¿Cómo funciona?</h2>
+    <p>Simple, rápido y completamente a medida.</p>
+    <div class="vq-steps">
+      <div class="vq-step">
+        <span class="vq-step-num">01</span>
+        <h3>Cuéntanos tu idea</h3>
+        <p>Rellena el formulario de cotización con la cantidad, tipo de personalización y fecha de entrega que necesitas. Te respondemos en menos de 24 horas.</p>
+      </div>
+      <div class="vq-step">
+        <span class="vq-step-num">02</span>
+        <h3>Diseño &amp; Aprobación</h3>
+        <p>Te enviamos una propuesta visual con tu logo y diseño aplicado al producto y el packaging. Ajustamos hasta que quede perfecto.</p>
+      </div>
+      <div class="vq-step">
+        <span class="vq-step-num">03</span>
+        <h3>Producción &amp; Despacho</h3>
+        <p>Producimos tu pedido y lo enviamos directamente a ti o a tus destinatarios. Te mantenemos informado en cada etapa.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= GALERÍA ======= -->
+  <section class="vq-gallery">
+    <h2>El producto que sorprende</h2>
+    <div class="vq-gallery-grid">
+      <div class="vq-gallery-item">
+        <img src="https://viniq.cl/cdn/shop/files/a.jpg?v=1766856112&width=800" alt="Cava VINIQ en uso" loading="lazy">
+      </div>
+      <div class="vq-gallery-item">
+        <img src="https://viniq.cl/cdn/shop/files/aaa.jpg?v=1766856112&width=600" alt="Cava VINIQ — Detalle" loading="lazy">
+      </div>
+      <div class="vq-gallery-item">
+        <img src="https://viniq.cl/cdn/shop/files/aa.jpg?v=1766856112&width=600" alt="Cava VINIQ — Diseño" loading="lazy">
+      </div>
+      <div class="vq-gallery-item">
+        <img src="https://viniq.cl/cdn/shop/files/WhatsApp_Image_2025-12-27_at_10.12.03_1.jpg?v=1766856112&width=600" alt="Cava VINIQ — Estilo" loading="lazy">
+      </div>
+      <div class="vq-gallery-item">
+        <img src="https://viniq.cl/cdn/shop/files/WhatsApp_Image_2025-12-27_at_10.12.03_2_05f25f0c-90bf-43ab-9c1a-59f032e71bbd.jpg?v=1769894550&width=600" alt="Cava VINIQ — Ambiente" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= CTA PRINCIPAL ======= -->
+  <section class="vq-cta">
+    <h2>¿Listo para sorprender<br>a tu equipo o clientes?</h2>
+    <p>El regalo que deja huella. 100% personalizado con tu marca, diseñado para destacar en cualquier evento o celebración corporativa.</p>
+    <a href="{{ section.settings.cta_url }}" class="vq-btn-white">{{ section.settings.cta_label }}</a>
+  </section>
+
+  <!-- ======= FAQ EMPRESAS ======= -->
+  <section class="vq-faq">
+    <h2>Preguntas frecuentes — Empresas</h2>
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'faq_item' -%}
+        <details class="vq-faq-item" {{ block.shopify_attributes }}>
+          <summary>{{ block.settings.question }}</summary>
+          <p>{{ block.settings.answer }}</p>
+        </details>
+      {%- endif -%}
+    {%- endfor -%}
+  </section>
+
+  <!-- ======= CONTACTO STRIP ======= -->
+  <div class="vq-contact-strip">
+    <p>¿Tienes dudas antes de cotizar?</p>
+    <p>Escríbenos directamente a <a href="mailto:{{ section.settings.contact_email }}">{{ section.settings.contact_email }}</a> o a través de nuestro <a href="{{ section.settings.cta_url }}">formulario de contacto</a>.</p>
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Empresas — Corporativo",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Texto sobre el título",
+      "default": "Soluciones Corporativas"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título principal",
+      "default": "VINIQ para Empresas"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subtítulo del hero",
+      "default": "Regala experiencias únicas con tu marca. Cavas de vino plegables 100% personalizadas con el logo, colores y packaging de tu empresa — el regalo corporativo que realmente sorprende y se recuerda."
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Imagen del hero"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "URL del botón CTA",
+      "default": "/pages/contact"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Texto del botón CTA",
+      "default": "Cotiza con nosotros"
+    },
+    {
+      "type": "header",
+      "content": "Propuesta de valor"
+    },
+    {
+      "type": "text",
+      "id": "value_heading",
+      "label": "Título propuesta de valor",
+      "default": "Todo personalizado. Todo tuyo."
+    },
+    {
+      "type": "textarea",
+      "id": "value_subheading",
+      "label": "Subtítulo propuesta de valor",
+      "default": "Cada detalle pensado para representar a tu empresa con elegancia. Desde 1 unidad o pedidos al por mayor — adaptamos el servicio a tus necesidades."
+    },
+    {
+      "type": "header",
+      "content": "Contacto"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Email de contacto",
+      "default": "contacto@viniq.cl"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value_item",
+      "name": "Beneficio",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Ícono (emoji o símbolo)",
+          "default": "◈"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título del beneficio",
+          "default": "Personalización"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Descripción",
+          "default": "100% a medida para tu empresa."
+        }
+      ]
+    },
+    {
+      "type": "faq_item",
+      "name": "Pregunta FAQ",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Pregunta",
+          "default": "¿Cuál es el pedido mínimo?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Respuesta",
+          "default": "Trabajamos desde 1 unidad."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Empresas — Corporativo",
+      "blocks": [
+        {
+          "type": "value_item",
+          "settings": {
+            "icon": "◈",
+            "title": "Logo Empresarial",
+            "description": "Grabado o impreso con tu logo corporativo. Alta resolución, aspecto premium."
+          }
+        },
+        {
+          "type": "value_item",
+          "settings": {
+            "icon": "◻",
+            "title": "Packaging a Medida",
+            "description": "Caja con diseño personalizado, colores de marca, mensaje y acabados especiales."
+          }
+        },
+        {
+          "type": "value_item",
+          "settings": {
+            "icon": "◫",
+            "title": "Fotografía Profesional",
+            "description": "Imágenes del producto con tu branding para que lo uses en tus comunicaciones."
+          }
+        },
+        {
+          "type": "value_item",
+          "settings": {
+            "icon": "◎",
+            "title": "Despacho Masivo",
+            "description": "Envíos a toda Chile con Blue Express. Coordinamos entregas a múltiples destinos."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Cuál es el pedido mínimo para empresas?",
+            "answer": "No existe un mínimo fijo — trabajamos desde 1 unidad. Sin embargo, para personalización con logo grabado o packaging especial, recomendamos pedidos de 5 unidades en adelante para optimizar costos y tiempos de producción."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Cuánto tiempo toma producir un pedido corporativo?",
+            "answer": "El tiempo de producción varía según la personalización. En general:\n— Pedidos estándar con logo: 5 a 7 días hábiles.\n— Pedidos con packaging personalizado: 10 a 15 días hábiles.\nSi tienes una fecha límite, indícala en el formulario y buscamos la forma de cumplirla."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Qué tipos de personalización ofrecen?",
+            "answer": "Ofrecemos múltiples opciones: logo empresarial grabado o impreso, packaging con diseño y colores de tu marca, tarjeta de regalo personalizada y fotografías del producto con tu branding para redes y comunicaciones."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Hacen despachos a múltiples destinos?",
+            "answer": "Sí. Coordinamos envíos individuales a distintas direcciones a lo largo de Chile usando Blue Express. El costo de envío se calcula por cada destino y se detalla en la cotización."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Cómo se realiza el pago?",
+            "answer": "Para pedidos corporativos trabajamos con factura. Se solicita un 50% de anticipo al confirmar el pedido y el saldo restante antes del despacho. Aceptamos transferencia bancaria y tarjeta de crédito/débito."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Pueden ayudarme con el diseño si no tengo archivos de mi logo?",
+            "answer": "Sí. Si no tienes los archivos en alta resolución, nuestro equipo puede ayudarte a recrear o adaptar tu logo para el producto. Solo comparte lo que tengas (imagen, sitio web, tarjeta de presentación) y lo trabajamos juntos."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
