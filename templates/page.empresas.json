@@ -12,8 +12,14 @@
     "empresas-main": {
       "type": "empresas-page",
       "settings": {
+        "hero_image": "shopify://shop_images/5.jpg",
         "whatsapp_number": "56975892545",
-        "contact_email": "contacto@viniq.cl"
+        "contact_email": "contacto@viniq.cl",
+        "gallery_image_1": "shopify://shop_images/aaa.jpg",
+        "gallery_image_2": "shopify://shop_images/b2bde9d7-c043-4bf1-9618-b47e71adb3fd.jpg",
+        "gallery_image_3": "shopify://shop_images/Regalo-corporativo-packaging-empresas-vino-accesorio-el-regalo-ideal.jpg",
+        "gallery_image_4": "shopify://shop_images/a.jpg",
+        "gallery_image_5": "shopify://shop_images/1.jpg"
       }
     }
   },
