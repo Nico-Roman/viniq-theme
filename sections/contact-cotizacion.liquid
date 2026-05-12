@@ -1,0 +1,543 @@
+<style>
+  .vq-contact * { box-sizing: border-box; }
+
+  .vq-contact {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #000;
+    background: #fff;
+  }
+
+  /* HERO */
+  .vq-contact-hero {
+    background: #7a2c2c;
+    color: #fff;
+    padding: 72px 40px;
+  }
+  .vq-contact-hero__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  @media (max-width: 900px) {
+    .vq-contact-hero { padding: 48px 24px; }
+    .vq-contact-hero__inner { grid-template-columns: 1fr; gap: 0; }
+    .vq-contact-hero__stats { display: none; }
+  }
+  .vq-contact-hero__eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; opacity: 0.7; margin: 0 0 16px;
+  }
+  .vq-contact-hero__title {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 700; line-height: 1.1;
+    letter-spacing: -0.02em; margin: 0 0 20px;
+  }
+  .vq-contact-hero__title em { font-style: normal; opacity: 0.6; }
+  .vq-contact-hero__desc {
+    font-size: 15px; line-height: 1.7; opacity: 0.85; max-width: 420px; margin: 0;
+  }
+  .vq-contact-hero__stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  }
+  .vq-stat-card {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px; padding: 20px;
+  }
+  .vq-stat-card__number { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+  .vq-stat-card__label { font-size: 12px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* TRUST BAR */
+  .vq-contact-trust {
+    background: #f5f5f5;
+    border-top: 1px solid #dfdfdf;
+    border-bottom: 1px solid #dfdfdf;
+    padding: 32px 40px;
+  }
+  .vq-contact-trust__inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; justify-content: space-around; gap: 24px; flex-wrap: wrap;
+  }
+  @media (max-width: 600px) { .vq-contact-trust { padding: 24px 20px; } }
+  .vq-trust-item { display: flex; align-items: center; gap: 12px; }
+  .vq-trust-item__icon {
+    width: 40px; height: 40px; background: #f5eded;
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; flex-shrink: 0;
+  }
+  .vq-trust-item__icon svg {
+    width: 20px; height: 20px; stroke: #7a2c2c; fill: none;
+    stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .vq-trust-item__text strong { display: block; font-size: 13px; font-weight: 600; }
+
+  /* MAIN LAYOUT */
+  .vq-contact-body {
+    max-width: 1200px; margin: 0 auto;
+    padding: 64px 40px;
+    display: grid; grid-template-columns: 1fr 1.6fr; gap: 64px; align-items: start;
+  }
+  @media (max-width: 900px) {
+    .vq-contact-body { grid-template-columns: 1fr; gap: 40px; padding: 40px 20px; }
+  }
+
+  /* LEFT INFO */
+  .vq-contact-info__tag {
+    display: inline-block; background: #f5eded; color: #7a2c2c;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 6px 14px;
+    border-radius: 100px; margin-bottom: 20px;
+  }
+  .vq-contact-info__title {
+    font-size: 28px; font-weight: 700; line-height: 1.2;
+    letter-spacing: -0.02em; margin: 0 0 16px;
+  }
+  .vq-contact-info__desc {
+    font-size: 14px; color: #6b6b6b; line-height: 1.75; margin: 0 0 36px;
+  }
+  .vq-contact-steps { list-style: none; padding: 0; margin: 0 0 40px; display: flex; flex-direction: column; gap: 20px; }
+  .vq-step { display: flex; gap: 16px; align-items: flex-start; }
+  .vq-step__num {
+    flex-shrink: 0; width: 32px; height: 32px; background: #7a2c2c;
+    color: #fff; border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; font-size: 13px; font-weight: 700;
+  }
+  .vq-step__content strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+  .vq-step__content span { font-size: 13px; color: #6b6b6b; line-height: 1.5; }
+  .vq-contact-divider { border: none; border-top: 1px solid #dfdfdf; margin-bottom: 32px; }
+  .vq-contact-direct strong {
+    display: block; font-size: 12px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em; color: #6b6b6b; margin-bottom: 12px;
+  }
+  .vq-contact-direct a {
+    display: flex; align-items: center; gap: 10px; color: #000;
+    text-decoration: none; font-size: 13px; font-weight: 500;
+    padding: 10px 0; border-bottom: 1px solid #f5f5f5;
+  }
+  .vq-contact-direct a:hover { color: #7a2c2c; }
+  .vq-contact-direct svg {
+    width: 18px; height: 18px; flex-shrink: 0; fill: none;
+    stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  /* FORM CARD */
+  .vq-form-card {
+    background: #fff; border: 1px solid #dfdfdf;
+    border-radius: 16px; padding: 40px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.07);
+  }
+  @media (max-width: 600px) { .vq-form-card { padding: 24px 20px; } }
+  .vq-form-card__header { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #f5f5f5; }
+  .vq-form-card__title { font-size: 20px; font-weight: 700; margin: 0 0 6px; }
+  .vq-form-card__subtitle { font-size: 13px; color: #6b6b6b; margin: 0; }
+
+  /* FORM */
+  .vq-form { display: flex; flex-direction: column; gap: 20px; }
+  .vq-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 600px) { .vq-form-row { grid-template-columns: 1fr; } }
+  .vq-field { display: flex; flex-direction: column; gap: 6px; }
+  .vq-field__label {
+    font-size: 12px; font-weight: 600; color: #333;
+    letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .vq-field__label .req { color: #7a2c2c; margin-left: 3px; }
+  .vq-field__label .opt {
+    font-weight: 400; font-style: italic; color: #6b6b6b;
+    text-transform: none; font-size: 11px; margin-left: 6px; letter-spacing: 0;
+  }
+  .vq-field__input,
+  .vq-field__textarea {
+    width: 100%; padding: 12px 16px;
+    font-family: inherit; font-size: 14px; color: #111;
+    background: #fff; border: 1px solid #dfdfdf;
+    border-radius: 4px; outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    -webkit-appearance: none;
+  }
+  .vq-field__input::placeholder,
+  .vq-field__textarea::placeholder { color: #6b6b6b; font-size: 13px; }
+  .vq-field__input:focus,
+  .vq-field__textarea:focus {
+    border-color: #7a2c2c;
+    box-shadow: 0 0 0 3px rgba(122,44,44,0.1);
+  }
+  .vq-field__textarea { resize: vertical; min-height: 120px; }
+
+  /* QUANTITY */
+  .vq-qty-wrap {
+    display: flex; align-items: center;
+    border: 1px solid #dfdfdf; border-radius: 4px;
+    overflow: hidden; background: #fff;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .vq-qty-wrap:focus-within {
+    border-color: #7a2c2c;
+    box-shadow: 0 0 0 3px rgba(122,44,44,0.1);
+  }
+  .vq-qty-btn {
+    background: #f5f5f5; border: none; width: 44px; height: 44px;
+    font-size: 20px; font-weight: 300; color: #333; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: background 0.15s; line-height: 1;
+    font-family: inherit;
+  }
+  .vq-qty-btn:hover { background: #dfdfdf; }
+  .vq-qty-input {
+    border: none; outline: none; width: 100%; text-align: center;
+    font-family: inherit; font-size: 16px; font-weight: 600; color: #111;
+    padding: 0 8px; height: 44px; background: #fff;
+    -moz-appearance: textfield;
+  }
+  .vq-qty-input::-webkit-outer-spin-button,
+  .vq-qty-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+  /* ERRORS & SUCCESS */
+  .vq-form-error {
+    display: flex; align-items: center; gap: 8px;
+    color: #7a2c2c; font-size: 13px; font-weight: 500;
+    background: #f5eded; border-radius: 4px; padding: 12px 16px;
+  }
+  .vq-form-success {
+    text-align: center; padding: 32px 24px;
+  }
+  .vq-form-success__icon {
+    width: 56px; height: 56px; background: #f5eded; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
+  }
+  .vq-form-success__icon svg {
+    width: 28px; height: 28px; stroke: #7a2c2c; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .vq-form-success__title { font-size: 20px; font-weight: 700; margin: 0 0 10px; }
+  .vq-form-success__text { font-size: 14px; color: #6b6b6b; max-width: 280px; margin: 0 auto; }
+
+  /* SUBMIT */
+  .vq-btn-submit {
+    width: 100%; padding: 16px 32px; background: #7a2c2c; color: #fff;
+    border: none; border-radius: 100px; font-family: inherit;
+    font-size: 14px; font-weight: 600; letter-spacing: 0.04em;
+    cursor: pointer; transition: background 0.2s, transform 0.1s;
+    margin-top: 8px;
+  }
+  .vq-btn-submit:hover { background: #5c1f1f; }
+  .vq-btn-submit:active { transform: scale(0.99); }
+  .vq-form-legal {
+    text-align: center; font-size: 11px; color: #6b6b6b;
+    line-height: 1.6; margin-top: 12px;
+  }
+</style>
+
+{%- assign wa_url = 'https://wa.me/' | append: section.settings.whatsapp_number -%}
+
+<div class="vq-contact">
+
+  <!-- HERO -->
+  <div class="vq-contact-hero">
+    <div class="vq-contact-hero__inner">
+      <div>
+        <p class="vq-contact-hero__eyebrow">Regalos Corporativos</p>
+        <h1 class="vq-contact-hero__title">
+          Cotiza tu pedido<br>
+          <em>empresarial</em>
+        </h1>
+        <p class="vq-contact-hero__desc">
+          Personaliza tu pedido, añade packaging especial y recibe una respuesta en menos de 24 horas hábiles.
+        </p>
+      </div>
+      <div class="vq-contact-hero__stats">
+        <div class="vq-stat-card">
+          <div class="vq-stat-card__number">24h</div>
+          <div class="vq-stat-card__label">Respuesta garantizada</div>
+        </div>
+        <div class="vq-stat-card">
+          <div class="vq-stat-card__number">100%</div>
+          <div class="vq-stat-card__label">Personalizable</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRUST BAR -->
+  <div class="vq-contact-trust">
+    <div class="vq-contact-trust__inner">
+      <div class="vq-trust-item">
+        <div class="vq-trust-item__icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="vq-trust-item__text">
+          <strong>Pago 100% seguro</strong>
+        </div>
+      </div>
+      <div class="vq-trust-item">
+        <div class="vq-trust-item__icon">
+          <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8zM5 17a2 2 0 104 0M17 17a2 2 0 104 0"/></svg>
+        </div>
+        <div class="vq-trust-item__text">
+          <strong>Despacho a todo Chile</strong>
+        </div>
+      </div>
+      <div class="vq-trust-item">
+        <div class="vq-trust-item__icon">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+        <div class="vq-trust-item__text">
+          <strong>Regalo ideal</strong>
+        </div>
+      </div>
+      <div class="vq-trust-item">
+        <div class="vq-trust-item__icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="vq-trust-item__text">
+          <strong>Respuesta en 24h</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="vq-contact-body">
+
+    <!-- LEFT: INFO -->
+    <aside>
+      <div class="vq-contact-info__tag">Cotización empresas</div>
+      <h2 class="vq-contact-info__title">¿Cómo funciona?</h2>
+      <p class="vq-contact-info__desc">
+        Completa el formulario con tus datos y cuántas unidades necesitas.
+        Nos contactamos contigo a la brevedad.
+      </p>
+
+      <ol class="vq-contact-steps">
+        <li class="vq-step">
+          <div class="vq-step__num">1</div>
+          <div class="vq-step__content">
+            <strong>Completa el formulario</strong>
+            <span>Ingresa tus datos y el número de unidades que necesitas.</span>
+          </div>
+        </li>
+        <li class="vq-step">
+          <div class="vq-step__num">2</div>
+          <div class="vq-step__content">
+            <strong>Revisamos tu solicitud</strong>
+            <span>En máximo 24 horas hábiles analizamos tu pedido.</span>
+          </div>
+        </li>
+        <li class="vq-step">
+          <div class="vq-step__num">3</div>
+          <div class="vq-step__content">
+            <strong>Nos ponemos en contacto</strong>
+            <span>Te contactamos por el medio que prefieras para coordinar los detalles.</span>
+          </div>
+        </li>
+        <li class="vq-step">
+          <div class="vq-step__num">4</div>
+          <div class="vq-step__content">
+            <strong>Coordinamos y despachamos</strong>
+            <span>Una vez confirmado todo, coordinamos el envío a donde necesites.</span>
+          </div>
+        </li>
+      </ol>
+
+      <hr class="vq-contact-divider">
+
+      <div class="vq-contact-direct">
+        <strong>Contacto directo</strong>
+        <a href="mailto:{{ section.settings.contact_email }}">
+          <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+          {{ section.settings.contact_email }}
+        </a>
+        <a href="{{ wa_url }}" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+          WhatsApp empresas
+        </a>
+      </div>
+    </aside>
+
+    <!-- RIGHT: FORM -->
+    <div class="vq-form-card">
+      <div class="vq-form-card__header">
+        <h3 class="vq-form-card__title">Solicitar contacto</h3>
+        <p class="vq-form-card__subtitle">Los campos con <strong style="color:#7a2c2c">*</strong> son obligatorios.</p>
+      </div>
+
+      {%- assign form_id = 'ContactFormCotizacion' -%}
+      {%- form 'contact', id: form_id, class: 'vq-form' -%}
+
+        {%- if form.errors and form.id == form_id -%}
+          <div class="vq-form-error">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            {{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}
+          </div>
+        {%- endif -%}
+
+        {%- if form.posted_successfully? and form.id == form_id -%}
+          <div class="vq-form-success">
+            <div class="vq-form-success__icon">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h3 class="vq-form-success__title">¡Mensaje enviado!</h3>
+            <p class="vq-form-success__text">
+              Nos contactaremos contigo en máximo 24 horas hábiles.
+            </p>
+          </div>
+        {%- else -%}
+
+          <!-- Nombre + Apellido -->
+          <div class="vq-form-row">
+            <div class="vq-field">
+              <label class="vq-field__label" for="nombre">Nombre <span class="req">*</span></label>
+              <input
+                class="vq-field__input"
+                type="text"
+                id="nombre"
+                name="contact[nombre]"
+                placeholder="Ej: María"
+                value="{{ form.body | escape }}"
+                required
+                autocomplete="given-name"
+              >
+            </div>
+            <div class="vq-field">
+              <label class="vq-field__label" for="apellido">Apellido <span class="req">*</span></label>
+              <input
+                class="vq-field__input"
+                type="text"
+                id="apellido"
+                name="contact[apellido]"
+                placeholder="Ej: González"
+                required
+                autocomplete="family-name"
+              >
+            </div>
+          </div>
+
+          <!-- Teléfono + Correo -->
+          <div class="vq-form-row">
+            <div class="vq-field">
+              <label class="vq-field__label" for="telefono">Teléfono <span class="req">*</span></label>
+              <input
+                class="vq-field__input"
+                type="tel"
+                id="telefono"
+                name="contact[telefono]"
+                placeholder="+56 9 XXXX XXXX"
+                value="{% if customer %}{{ customer.phone }}{% endif %}"
+                required
+                autocomplete="tel"
+              >
+            </div>
+            <div class="vq-field">
+              <label class="vq-field__label" for="correo">Correo <span class="req">*</span></label>
+              <input
+                class="vq-field__input"
+                type="email"
+                id="correo"
+                name="contact[email]"
+                placeholder="tu@empresa.cl"
+                value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                required
+                autocomplete="email"
+                spellcheck="false"
+                autocapitalize="off"
+                {% if form.errors contains 'email' %}aria-invalid="true"{% endif %}
+              >
+            </div>
+          </div>
+
+          <!-- Razón Social -->
+          <div class="vq-field">
+            <label class="vq-field__label" for="razon-social">
+              Razón Social <span class="opt">(opcional)</span>
+            </label>
+            <input
+              class="vq-field__input"
+              type="text"
+              id="razon-social"
+              name="contact[razon_social]"
+              placeholder="Ej: Empresa Ejemplo SpA"
+              autocomplete="organization"
+            >
+          </div>
+
+          <!-- Cantidad -->
+          <div class="vq-field">
+            <label class="vq-field__label" for="cantidad">Cantidad de unidades <span class="req">*</span></label>
+            <div class="vq-qty-wrap">
+              <button type="button" class="vq-qty-btn" onclick="vqChangeQty(-1)" aria-label="Disminuir">−</button>
+              <input
+                class="vq-qty-input"
+                type="number"
+                id="cantidad"
+                name="contact[cantidad]"
+                value="1"
+                min="1"
+                required
+              >
+              <button type="button" class="vq-qty-btn" onclick="vqChangeQty(1)" aria-label="Aumentar">+</button>
+            </div>
+          </div>
+
+          <!-- Comentario -->
+          <div class="vq-field">
+            <label class="vq-field__label" for="comentario">
+              Comentario o detalle <span class="opt">(opcional)</span>
+            </label>
+            <textarea
+              class="vq-field__textarea"
+              id="comentario"
+              name="contact[body]"
+              placeholder="Ej: necesito entrega urgente para el 20 de junio, packaging especial con logo de empresa…"
+            >{{- form.body -}}</textarea>
+          </div>
+
+          <!-- SUBMIT -->
+          <button type="submit" class="vq-btn-submit">Enviar solicitud</button>
+          <p class="vq-form-legal">
+            Al enviar este formulario aceptas que nos contactemos contigo para responder tu solicitud.
+            No compartimos tus datos con terceros.
+          </p>
+
+        {%- endif -%}
+
+      {%- endform -%}
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function vqChangeQty(delta) {
+    var input = document.getElementById('cantidad');
+    var next = Math.max(1, (parseInt(input.value) || 1) + delta);
+    input.value = next;
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Contacto — Cotización",
+  "settings": [
+    {
+      "type": "text",
+      "id": "whatsapp_number",
+      "label": "Número WhatsApp (con código país, sin +)",
+      "default": "56975892545",
+      "info": "Ejemplo: 56975892545"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Email de contacto",
+      "default": "contacto@viniq.cl"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contacto — Cotización"
+    }
+  ]
+}
+{% endschema %}
