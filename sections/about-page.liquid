@@ -1,0 +1,371 @@
+<style>
+  .vq-about * { box-sizing: border-box; }
+
+  .vq-about {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #000;
+    background: #fff;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* ── SHARED ── */
+  .vq-about__eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.4);
+    margin: 0 0 14px;
+    display: block;
+  }
+
+  /* ── INTRO ── */
+  .vq-about__intro {
+    padding: 72px 0 64px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: end;
+  }
+  @media (max-width: 768px) {
+    .vq-about__intro {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding: 56px 0 48px;
+    }
+  }
+  .vq-about__intro-heading {
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0;
+  }
+  .vq-about__intro-heading em {
+    font-style: italic;
+    font-weight: 400;
+  }
+  .vq-about__intro-body {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: rgba(0,0,0,0.65);
+    margin: 0;
+  }
+  .vq-about__intro-meta {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.28);
+    margin: 0;
+    padding-top: 16px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+  }
+
+  /* ── ORIGIN ── */
+  .vq-about__origin {
+    padding: 72px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 80px;
+    align-items: start;
+  }
+  @media (max-width: 768px) {
+    .vq-about__origin {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      padding: 56px 0;
+    }
+  }
+  .vq-about__origin-left {
+    position: sticky;
+    top: 120px;
+  }
+  @media (max-width: 768px) {
+    .vq-about__origin-left { position: static; }
+  }
+  .vq-about__origin-heading {
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    margin: 0;
+  }
+  .vq-about__origin-heading em {
+    font-style: italic;
+    font-weight: 400;
+  }
+  .vq-about__origin-body p {
+    font-size: 0.9375rem;
+    line-height: 1.8;
+    color: rgba(0,0,0,0.68);
+    margin: 0 0 20px;
+  }
+  .vq-about__origin-body p:last-of-type { margin-bottom: 0; }
+  .vq-about__blockquote {
+    margin: 36px 0 0;
+    padding: 0 0 0 22px;
+    border-left: 2px solid #7a2c2c;
+  }
+  .vq-about__blockquote p {
+    font-size: 1rem;
+    font-style: italic;
+    color: rgba(0,0,0,0.75);
+    line-height: 1.65;
+    margin: 0 0 10px;
+  }
+  .vq-about__blockquote cite {
+    font-size: 0.8125rem;
+    font-style: normal;
+    font-weight: 600;
+    color: rgba(0,0,0,0.45);
+    letter-spacing: 0.04em;
+    display: block;
+  }
+
+  /* ── VALUES ── */
+  .vq-about__values {
+    padding: 72px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+  .vq-about__values-header {
+    margin-bottom: 48px;
+  }
+  .vq-about__values-heading {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    margin: 0;
+  }
+  .vq-about__values-heading em {
+    font-style: italic;
+    font-weight: 400;
+  }
+  .vq-about__values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: 768px) {
+    .vq-about__values-grid { grid-template-columns: 1fr; }
+  }
+  .vq-about__value-item {
+    padding: 36px 32px;
+    border-left: 1px solid rgba(0,0,0,0.08);
+  }
+  .vq-about__value-item:first-child {
+    border-left: none;
+    padding-left: 0;
+  }
+  @media (max-width: 768px) {
+    .vq-about__value-item {
+      border-left: none;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      padding: 32px 0;
+    }
+    .vq-about__value-item:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+  }
+  .vq-about__value-num {
+    font-size: 3rem;
+    font-weight: 700;
+    color: rgba(0,0,0,0.06);
+    line-height: 1;
+    margin-bottom: 20px;
+    display: block;
+    letter-spacing: -0.04em;
+  }
+  .vq-about__value-title {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 0 0 10px;
+  }
+  .vq-about__value-text {
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: rgba(0,0,0,0.6);
+    margin: 0;
+  }
+
+  /* ── FOUNDER ── */
+  .vq-about__founder {
+    padding: 72px 0 80px;
+  }
+  @media (max-width: 768px) {
+    .vq-about__founder { padding: 56px 0 64px; }
+  }
+  .vq-about__founder-inner {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  @media (max-width: 600px) {
+    .vq-about__founder-inner {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+  }
+  .vq-about__founder-monogram {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #000;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+  .vq-about__founder-name {
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+    line-height: 1.1;
+  }
+  .vq-about__founder-bio {
+    font-size: 0.9375rem;
+    line-height: 1.8;
+    color: rgba(0,0,0,0.65);
+    margin: 0 0 28px;
+    max-width: 600px;
+  }
+  .vq-about__founder-tagline {
+    font-size: 0.9375rem;
+    font-style: italic;
+    color: rgba(0,0,0,0.45);
+    margin: 0;
+    padding-top: 24px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    max-width: 400px;
+  }
+</style>
+
+<div class="vq-about">
+
+  <!-- INTRO -->
+  <section class="vq-about__intro">
+    <div>
+      <span class="vq-about__eyebrow">Empresa Chilena &middot; Desde Chile para el mundo</span>
+      <h1 class="vq-about__intro-heading">Pasión por el vino <em>chileno</em></h1>
+    </div>
+    <div>
+      <p class="vq-about__intro-body">
+        VINIQ nació de la convicción de que el vino merece un lugar digno en cada hogar.
+        Somos una empresa chilena que diseña soluciones elegantes para quienes comparten
+        ese mismo amor por la vida.
+      </p>
+      <p class="vq-about__intro-meta">viniq.cl &mdash; Chile</p>
+    </div>
+  </section>
+
+  <!-- ORIGEN -->
+  <section class="vq-about__origin">
+    <div class="vq-about__origin-left">
+      <span class="vq-about__eyebrow">Nuestro Origen</span>
+      <h2 class="vq-about__origin-heading">Una historia que comienza con <em>una copa</em></h2>
+    </div>
+    <div class="vq-about__origin-body">
+      <p>
+        VINIQ es una empresa de origen chileno nacida de la pasión genuina por el vino nacional.
+        Creemos que Chile produce algunos de los mejores vinos del mundo, y que esa riqueza merece
+        ser celebrada y exhibida con orgullo en cada espacio.
+      </p>
+      <p>
+        Nuestra propuesta es simple: acercar soluciones de almacenamiento elegantes, funcionales
+        y accesibles a todos los amantes del vino en Chile y más allá.
+      </p>
+      <p>
+        Desde el primer día, VINIQ se ha construido con una mirada puesta en la calidad y en la
+        experiencia del cliente. Cada producto que ofrecemos refleja ese compromiso: diseño que
+        decora, funcionalidad que sorprende.
+      </p>
+      <p>
+        Orgullosamente chilenos, trabajamos para que el amor por el vino tenga un hogar tan
+        cuidado como la bebida que lo habita.
+      </p>
+      <blockquote class="vq-about__blockquote">
+        <p>"El vino chileno es extraordinario. Merecía un espacio a la altura."</p>
+        <cite>Nicolás Román Gligo &mdash; Fundador de VINIQ</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- VALORES -->
+  <section class="vq-about__values">
+    <div class="vq-about__values-header">
+      <span class="vq-about__eyebrow">Lo que nos mueve</span>
+      <h2 class="vq-about__values-heading">Nuestros <em>valores</em></h2>
+    </div>
+    <div class="vq-about__values-grid">
+      <div class="vq-about__value-item">
+        <span class="vq-about__value-num">01</span>
+        <h3 class="vq-about__value-title">Pasión</h3>
+        <p class="vq-about__value-text">
+          El vino no es solo una bebida para nosotros, es cultura, territorio e identidad chilena.
+          Esa pasión guía cada decisión que tomamos.
+        </p>
+      </div>
+      <div class="vq-about__value-item">
+        <span class="vq-about__value-num">02</span>
+        <h3 class="vq-about__value-title">Diseño</h3>
+        <p class="vq-about__value-text">
+          Creemos que la funcionalidad y la estética no son opuestos. Nuestros productos están
+          pensados para decorar y para durar.
+        </p>
+      </div>
+      <div class="vq-about__value-item">
+        <span class="vq-about__value-num">03</span>
+        <h3 class="vq-about__value-title">Cercanía</h3>
+        <p class="vq-about__value-text">
+          Somos una empresa chilena que atiende a personas reales. La atención al cliente no es
+          un proceso para nosotros, es una conversación.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FUNDADOR -->
+  <section class="vq-about__founder">
+    <span class="vq-about__eyebrow">El Fundador</span>
+    <div class="vq-about__founder-inner">
+      <div class="vq-about__founder-monogram" aria-hidden="true">NR</div>
+      <div>
+        <h2 class="vq-about__founder-name">Nicolás Román Gligo</h2>
+        <p class="vq-about__founder-bio">
+          Nicolás Román Gligo es el creador y fundador de VINIQ. Entusiasta del vino chileno y
+          convencido del potencial de la vitivinicultura nacional, decidió canalizar esa pasión
+          en una empresa que celebrara la cultura del vino desde el diseño y la funcionalidad.
+          Con una visión clara desde el comienzo, Nicolás construyó VINIQ como una marca chilena
+          auténtica: cercana, cuidada y comprometida con entregar productos que estén realmente
+          a la altura de los vinos que almacenan.
+        </p>
+        <p class="vq-about__founder-tagline">Diseñado en Chile, para los que aman el vino.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "Quiénes Somos",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Quiénes Somos"
+    }
+  ]
+}
+{% endschema %}
