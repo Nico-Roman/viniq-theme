@@ -595,15 +595,15 @@
   </div>
 </div>
 
-<!-- POPUP $3.000 DESCUENTO -->
+<!-- POPUP 30% DESCUENTO CYBER -->
 <div class="vq-overlay" id="vq-discount">
   <div class="vq-popup">
     <button class="vq-popup__close" onclick="vqClose('vq-discount')" aria-label="Cerrar">×</button>
-    <div class="vq-tag">Solo por hoy · Primera compra</div>
-    <h2>¡$3.000 de descuento<br>en tu primera compra!</h2>
-    <p>Usa este código al finalizar tu compra y paga solo <strong>$21.990</strong> por tu cava VINIQ.</p>
+    <div class="vq-tag">Solo por hoy · CYBER</div>
+    <h2>¡30% de descuento<br>CYBER!</h2>
+    <p>Usa este código al finalizar tu compra y obtén un 30% de descuento en tu cava VINIQ.</p>
     <div class="vq-code-box">
-      <span>PRIMERA</span>
+      <span>CYBER30</span>
       <button class="vq-copy-btn" onclick="vqCopy(this)">Copiar</button>
     </div>
     <div class="vq-timer">⏱ El código expira en: <strong id="vq-countdown">23:59:59</strong></div>
@@ -627,7 +627,7 @@
     </div>
     <div class="vq-clauses">
       <ol>
-        <li>El descuento de <strong>$3.000</strong> con el código <strong>PRIMERA</strong> ha sido reservado exclusivamente para usted.</li>
+        <li>El descuento de <strong>30%</strong> con el código <strong>CYBER30</strong> ha sido reservado exclusivamente para usted.</li>
         <li>Al abandonar este sitio, <strong>la oferta quedará anulada de forma permanente</strong> y el código expirará inmediatamente.</li>
         <li>No será posible recuperar este beneficio ni reclamarlo en una visita futura.</li>
         <li>El precio de tu cava VINIQ volverá al valor regular de $24.990 sin posibilidad de excepción.</li>
@@ -636,7 +636,7 @@
     <p style="font-size:13px;color:#888;margin-bottom:18px;">Al hacer clic en "Volver y aprovechar" reconoces que has leído y aceptado los términos anteriores.</p>
     <div class="vq-exit-actions">
       <a href="#" class="vq-btn" onclick="vqAddAndOpen(); return false;">✅ Volver y aprovechar mi descuento</a>
-      <button class="vq-btn-secondary" onclick="vqClose('vq-exit')">Renuncio a mi descuento de $3.000 y salgo</button>
+      <button class="vq-btn-secondary" onclick="vqClose('vq-exit')">Renuncio a mi descuento de 30% y salgo</button>
     </div>
   </div>
 </div>
@@ -714,7 +714,7 @@
     document.getElementById(id).classList.remove('active');
   };
   window.vqCopy = function(btn) {
-    navigator.clipboard.writeText('PRIMERA').then(function() {
+    navigator.clipboard.writeText('CYBER30').then(function() {
       btn.textContent = '¡Copiado!';
       btn.style.background = '#7a2c2c';
       btn.style.color = '#fff';
@@ -738,10 +738,10 @@
       })
       .then(function(res) {
         if (!res.ok) throw new Error('error');
-        window.location.href = '/checkout?discount=PRIMERA';
+        window.location.href = '/checkout?discount=CYBER30';
       })
       .catch(function() {
-        window.location.href = '/cart/' + VQ_VARIANT_ID + ':1?checkout[discount_code]=PRIMERA&redirect=/checkout';
+        window.location.href = '/cart/' + VQ_VARIANT_ID + ':1?checkout[discount_code]=CYBER30&redirect=/checkout';
       });
   };
 
