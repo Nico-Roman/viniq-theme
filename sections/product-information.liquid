@@ -707,7 +707,9 @@
   var vqPurchased = {{ vq_has_purchased | json }};
   var vqIsProductPage = {{ request.page_type | json }} === 'product' &&
                         {{ product.handle | json }} === 'cava-de-vino-plegable-de-madera-diseno-funcional-y-elegante';
-  var vqShouldShow = vqIsProductPage && (!vqIsLogged || (vqIsLogged && !vqPurchased));
+  var vqCyberExpiry = new Date('2026-06-04T00:00:00-04:00'); // Chile (UTC-4) — expira jueves 4 jun a medianoche
+  var vqCyberActive = Date.now() < vqCyberExpiry.getTime();
+  var vqShouldShow = vqCyberActive && vqIsProductPage && (!vqIsLogged || (vqIsLogged && !vqPurchased));
   var exitShown = false;
 
   window.vqClose = function(id) {
