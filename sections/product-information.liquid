@@ -471,22 +471,7 @@
 }
 {% endschema %}
 
-{% comment %} ===== VINIQ POPUP + CHAT ===== {% endcomment %}
-
-{% assign vq_has_purchased = false %}
-{% if customer %}
-  {% assign vq_is_logged = true %}
-  {% for order in customer.orders limit:50 %}
-    {% assign order_month = order.created_at | date: "%Y-%m" %}
-    {% assign current_month = "now" | date: "%Y-%m" %}
-    {% if order_month == current_month %}
-      {% assign vq_has_purchased = true %}
-      {% break %}
-    {% endif %}
-  {% endfor %}
-{% else %}
-  {% assign vq_is_logged = false %}
-{% endif %}
+{% comment %} ===== VINIQ CHAT ===== {% endcomment %}
 
 <style>
   :root {
@@ -542,38 +527,6 @@
   #chat-input-area textarea { width: 100%; padding: 10px 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 13px; box-sizing: border-box; font-family: inherit; resize: none; height: 65px; outline: none; }
   #chat-input-area textarea:focus { border-color: #111; }
   #chat-send { width: 100%; background: #111; color: white; border: none; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; letter-spacing: 0.5px; text-transform: uppercase; font-family: inherit; margin-top: 8px; }
-  .vq-overlay { display: none; position: fixed; inset: 0; background: rgba(20,10,5,0.72); backdrop-filter: blur(4px); z-index: 10000; align-items: center; justify-content: center; animation: vqFadeIn 0.35s ease; }
-  .vq-overlay.active { display: flex; }
-  @keyframes vqFadeIn  { from { opacity: 0 } to { opacity: 1 } }
-  @keyframes vqSlideUp { from { opacity: 0; transform: translateY(40px) } to { opacity: 1; transform: translateY(0) } }
-  .vq-popup { background: var(--vq-cream); border-radius: 4px; max-width: 460px; width: 92%; padding: 40px 36px 32px; position: relative; animation: vqSlideUp 0.4s cubic-bezier(.22,1,.36,1); text-align: center; box-shadow: 0 32px 80px rgba(0,0,0,0.45); }
-  .vq-popup__close { position: absolute; top: 12px; right: 16px; background: none; border: none; font-size: 22px; cursor: pointer; color: #999; line-height: 1; }
-  .vq-popup__close:hover { color: var(--vq-dark); }
-  .vq-tag { display: inline-block; background: var(--vq-wine); color: #fff; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; }
-  .vq-popup h2 { font-family: Georgia, serif; font-size: 28px; color: var(--vq-dark); margin: 0 0 8px; line-height: 1.2; }
-  .vq-popup p { font-size: 15px; color: #555; margin: 0 0 20px; line-height: 1.5; }
-  .vq-code-box { display: flex; align-items: center; justify-content: center; gap: 10px; background: #fff; border: 2px dashed var(--vq-gold); border-radius: 4px; padding: 14px 18px; margin-bottom: 20px; }
-  .vq-code-box span { font-family: 'Courier New', monospace; font-size: 22px; font-weight: bold; color: var(--vq-wine); letter-spacing: 3px; }
-  .vq-copy-btn { background: none; border: 1px solid var(--vq-wine); color: var(--vq-wine); font-size: 12px; padding: 4px 10px; border-radius: 3px; cursor: pointer; transition: all .2s; }
-  .vq-copy-btn:hover { background: var(--vq-wine); color: #fff; }
-  .vq-timer { font-size: 13px; color: #888; margin-bottom: 22px; }
-  .vq-timer strong { color: var(--vq-wine); font-size: 15px; font-variant-numeric: tabular-nums; }
-  .vq-btn { display: block; width: 100%; padding: 15px; background: var(--vq-wine); color: #fff; font-size: 15px; font-weight: 600; letter-spacing: 0.5px; border: none; border-radius: 3px; cursor: pointer; text-decoration: none; transition: background .2s, transform .1s; }
-  .vq-btn:hover { background: #5e2020; transform: translateY(-1px); }
-  .vq-dismiss { display: block; margin-top: 14px; font-size: 12px; color: #aaa; cursor: pointer; text-decoration: underline; }
-  .vq-dismiss:hover { color: #666; }
-  #vq-exit .vq-popup { max-width: 500px; text-align: left; }
-  #vq-exit .vq-contract-header { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid #ddd; }
-  #vq-exit .vq-seal { font-size: 36px; line-height: 1; }
-  #vq-exit .vq-contract-header h3 { margin: 0 0 2px; font-family: Georgia, serif; font-size: 18px; color: var(--vq-dark); }
-  #vq-exit .vq-contract-header p { margin: 0; font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
-  .vq-clauses { background: #fff; border: 1px solid #e0d8cc; border-radius: 4px; padding: 16px 18px; margin-bottom: 20px; font-size: 13.5px; color: #444; line-height: 1.7; }
-  .vq-clauses ol { margin: 0; padding-left: 18px; }
-  .vq-clauses li { margin-bottom: 6px; }
-  .vq-clauses strong { color: var(--vq-wine); }
-  .vq-exit-actions { display: flex; gap: 10px; flex-direction: column; }
-  .vq-btn-secondary { display: block; width: 100%; padding: 13px; background: #fff; color: #888; font-size: 13px; border: 1px solid #ddd; border-radius: 3px; cursor: pointer; text-align: center; transition: background .2s; }
-  .vq-btn-secondary:hover { background: #f5f0eb; color: #555; }
 </style>
 
 <!-- CHAT -->
@@ -595,55 +548,8 @@
   </div>
 </div>
 
-<!-- POPUP 30% DESCUENTO CYBER -->
-<div class="vq-overlay" id="vq-discount">
-  <div class="vq-popup">
-    <button class="vq-popup__close" onclick="vqClose('vq-discount')" aria-label="Cerrar">×</button>
-    <div class="vq-tag">Solo por hoy · CYBER</div>
-    <h2>¡30% de descuento<br>CYBER!</h2>
-    <p>Usa este código al finalizar tu compra y obtén un 30% de descuento en tu cava VINIQ.</p>
-    <div class="vq-code-box">
-      <span>CYBER30</span>
-      <button class="vq-copy-btn" onclick="vqCopy(this)">Copiar</button>
-    </div>
-    <div class="vq-timer">⏱ El código expira en: <strong id="vq-countdown">23:59:59</strong></div>
-    <a href="#" class="vq-btn" onclick="vqAddAndOpen(); return false;">
-      🍷 Comprar ahora con descuento
-    </a>
-    <span class="vq-dismiss" onclick="vqClose('vq-discount')">No, prefiero pagar precio completo</span>
-  </div>
-</div>
-
-<!-- POPUP EXIT INTENT -->
-<div class="vq-overlay" id="vq-exit">
-  <div class="vq-popup">
-    <button class="vq-popup__close" onclick="vqClose('vq-exit')" aria-label="Cerrar">×</button>
-    <div class="vq-contract-header">
-      <div class="vq-seal">📜</div>
-      <div>
-        <h3>Contrato de Oferta Especial</h3>
-        <p>Documento oficial · VINIQ Chile</p>
-      </div>
-    </div>
-    <div class="vq-clauses">
-      <ol>
-        <li>El descuento de <strong>30%</strong> con el código <strong>CYBER30</strong> ha sido reservado exclusivamente para usted.</li>
-        <li>Al abandonar este sitio, <strong>la oferta quedará anulada de forma permanente</strong> y el código expirará inmediatamente.</li>
-        <li>No será posible recuperar este beneficio ni reclamarlo en una visita futura.</li>
-        <li>El precio de tu cava VINIQ volverá al valor regular de $24.990 sin posibilidad de excepción.</li>
-      </ol>
-    </div>
-    <p style="font-size:13px;color:#888;margin-bottom:18px;">Al hacer clic en "Volver y aprovechar" reconoces que has leído y aceptado los términos anteriores.</p>
-    <div class="vq-exit-actions">
-      <a href="#" class="vq-btn" onclick="vqAddAndOpen(); return false;">✅ Volver y aprovechar mi descuento</a>
-      <button class="vq-btn-secondary" onclick="vqClose('vq-exit')">Renuncio a mi descuento de 30% y salgo</button>
-    </div>
-  </div>
-</div>
-
 <script>
 (function() {
-  var VQ_VARIANT_ID = {{ product.selected_or_first_available_variant.id }};
   var BACKEND_URL = "https://web-production-13291.up.railway.app";
   var sessionId = null;
   var customerName = "";
@@ -702,86 +608,6 @@
       body: JSON.stringify({ session_id: sessionId, name: customerName, phone: customerPhone, message: message })
     });
   });
-
-  var vqIsLogged  = {{ vq_is_logged | json }};
-  var vqPurchased = {{ vq_has_purchased | json }};
-  var vqIsProductPage = {{ request.page_type | json }} === 'product' &&
-                        {{ product.handle | json }} === 'cava-de-vino-plegable-de-madera-diseno-funcional-y-elegante';
-  var vqCyberExpiry = new Date('2026-06-04T00:00:00-04:00'); // Chile (UTC-4) — expira jueves 4 jun a medianoche
-  var vqCyberActive = Date.now() < vqCyberExpiry.getTime();
-  var vqShouldShow = vqCyberActive && vqIsProductPage && (!vqIsLogged || (vqIsLogged && !vqPurchased));
-  var exitShown = false;
-
-  window.vqClose = function(id) {
-    document.getElementById(id).classList.remove('active');
-  };
-  window.vqCopy = function(btn) {
-    navigator.clipboard.writeText('CYBER30').then(function() {
-      btn.textContent = '¡Copiado!';
-      btn.style.background = '#7a2c2c';
-      btn.style.color = '#fff';
-      setTimeout(function() {
-        btn.textContent = 'Copiar';
-        btn.style.background = '';
-        btn.style.color = '';
-      }, 2000);
-    });
-  };
-  window.vqAddAndOpen = function() {
-    vqClose('vq-discount');
-    vqClose('vq-exit');
-    fetch('/cart/clear.js', { method: 'POST' })
-      .then(function() {
-        return fetch('/cart/add.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id: VQ_VARIANT_ID, quantity: 1 })
-        });
-      })
-      .then(function(res) {
-        if (!res.ok) throw new Error('error');
-        window.location.href = '/checkout?discount=CYBER30';
-      })
-      .catch(function() {
-        window.location.href = '/cart/' + VQ_VARIANT_ID + ':1?checkout[discount_code]=CYBER30&redirect=/checkout';
-      });
-  };
-
-  function startTimer() {
-    var todayKey = 'vq_expiry_' + new Date().toISOString().slice(0, 10);
-    Object.keys(localStorage).forEach(function(k) {
-      if (k.startsWith('vq_expiry_') && k !== todayKey) localStorage.removeItem(k);
-    });
-    var expiry = parseInt(localStorage.getItem(todayKey) || '0');
-    if (!expiry || expiry < Date.now()) {
-      expiry = Date.now() + (24 * 60 * 60 * 1000);
-      localStorage.setItem(todayKey, expiry.toString());
-    }
-    var el = document.getElementById('vq-countdown');
-    if (!el) return;
-    var iv = setInterval(function() {
-      var diff = expiry - Date.now();
-      if (diff <= 0) { clearInterval(iv); el.textContent = '00:00:00'; return; }
-      var h = Math.floor(diff / 3600000);
-      var m = Math.floor((diff % 3600000) / 60000);
-      var s = Math.floor((diff % 60000) / 1000);
-      el.textContent = String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
-    }, 1000);
-  }
-
-  if (vqShouldShow) {
-    startTimer();
-    setTimeout(function() {
-      document.getElementById('vq-discount').classList.add('active');
-    }, 7000);
-    document.addEventListener('mouseleave', function(e) {
-      if (e.clientY <= 5 && !exitShown) {
-        exitShown = true;
-        document.getElementById('vq-discount').classList.remove('active');
-        document.getElementById('vq-exit').classList.add('active');
-      }
-    });
-  }
 
 })();
 </script>
